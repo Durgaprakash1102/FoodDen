@@ -1,0 +1,44 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %} Manage Menu {% endblock title %}
+{% load static %}
+{% block body %}
+
+{% for message in messages %}
+    <div class="alert alert-success alert-dismissable fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+
+<div class="container py-4">
+    <h2>Add a Category</h2>
+    <form method="POST" action="{% url 'category' %}" enctype="multipart/form-data" class="card p-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Category Name</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Enter Category Name">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Enter Description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" name="image" class="form-control" id="image" accept="image/*">
+        </div>
+        <div class="mb-3">
+            <label for="order" class="form-label">Listing Order</label>
+            <input type="number" name="order" class="form-control" id="order" placeholder="Enter Listing Order">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Category</button>
+    </form>
+</div>
+
+
+{% include 'footer.html' %}<!-- Banner Carousel -->
+
+{% endblock body %}

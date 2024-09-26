@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Cash on Delivery{% endblock title %}
+
+{% block body %}
+<style>
+    /* Custom styles for the Cash on Delivery page */
+    .container {
+        max-width: 960px;
+    }
+
+    .card {
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-title {
+        font-size: 1.75rem;
+        color: #333;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .card-body {
+        font-size: 1rem;
+        color: #555;
+    }
+    
+    .card-body ul {
+        padding-left: 0;
+    }
+    
+    .card-body ul li {
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .card-body .bi {
+        color: #007bff;
+        margin-right: 10px;
+    }
+    
+    .text-primary {
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        margin-bottom: 20px;
+    }
+
+    .section-description {
+        color: #777;
+        font-size: 1rem;
+    }
+
+    .highlight {
+        background-color: #f0f8ff;
+        border-left: 5px solid #007bff;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .highlight p {
+        margin: 0;
+    }
+</style>
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <!-- Order Details Section -->
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 mb-4">
+                <h2 class="card-title">Order Details</h2>
+                <div class="card-body">
+                    <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+                    <p><strong>Customer Name:</strong> {{ order.name }}</p>
+                    <p><strong>Phone Number:</strong> {{ order.phone }}</p>
+                    <p><strong>Table:</strong> {{ order.table }}</p>
+                    <p><strong>Items Ordered:</strong></p>
+                    <ul class="list-unstyled">
+                        {% for item, quantity in order.items_json.items %}
+                            <li><i class="bi bi-caret-right"></i> {{ item }}: {{ quantity }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p><strong>Total Amount:</strong> ₹{{ order.price }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Information Section -->
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h2 class="card-title">Payment Method</h2>
+                <div class="card-body highlight">
+                    <h4 class="text-primary">Cash on Delivery</h4>
+                    <p class="section-description">Your order will be paid in cash upon delivery at your table.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+{% endblock body %}

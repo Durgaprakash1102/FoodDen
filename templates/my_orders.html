@@ -1,0 +1,104 @@
+ {% extends 'base.html' %} {% block title %}My Orders{% endblock title %} {% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    /* Custom styling for the order cards */
+    
+    .order-card {
+        flex: 0 0 calc(33.33% - 20px);
+        /* Three cards per row */
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        /* Light gray background */
+        transition: transform 0.3s ease;
+    }
+    
+    .order-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .order-details {
+        margin-top: 15px;
+    }
+    /* Button styling */
+    
+    .btn-success {
+        background-color: #28a745;
+        /* Green color */
+        border-color: #28a745;
+        transition: background-color 0.3s ease;
+        padding: 8px 20px;
+        /* Adjust padding for better appearance */
+        border-radius: 5px;
+        /* Add some border radius for button-like appearance */
+        color: #fff;
+        /* White text color */
+        text-decoration: none;
+        /* Remove underline */
+        display: inline-block;
+        /* Display as inline-block for proper spacing */
+    }
+    
+    .btn-success:hover {
+        background-color: #218838;
+        /* Darker green color on hover */
+    }
+    
+    .recent-order {
+        background-color: rgb(173, 244, 170);
+    }
+    
+    .expired-order {
+        opacity: 0.5;
+        /* This can be any styling you choose to indicate expiration */
+    }
+    .heading {
+        font-family: 'Merriweather', serif;
+        font-size: 2rem; 
+  font-weight: 600; 
+  margin-bottom: 20px;
+  color:green; 
+  text-align: center;
+    }
+</style>
+<div class="container" style="padding: 20px;">
+    <h2 class="heading" >Your Orders</h2>
+    <div class="row" style="padding: 20px; background-image: url('static/back3.jpg');background-size:cover ;overflow-y: scroll;height: 500px;">
+        {% for table, orders in order_by_table.items %}
+        {% for o in orders %}
+            <div class="col-md-4">
+                <div class="order-card {% if o.is_recent %}recent-order{% endif %} {% if o.is_expired %}expired-order{% endif %}">
+                    <div class="order-details">
+                        <p><strong>Order ID:</strong> {{ o.order_id }}</p>
+                        <p><strong>Order Time:</strong> {{ o.order_time }}</p>
+                        {% if o.is_expired %}
+                            <p class="text-danger"><strong>Expired</strong></p>
+                        {% endif %}
+                        <p><strong>Items:</strong></p>
+                        <ul>
+                            {% for item_key, item_values in o.items_json.items %}
+                                <li><b>{{ item_values.1 }}:</b> {{ item_values.0 }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="total-price btn btn-primary mb-3">Total: <i class="fa fa-rupee"></i> {{ o.price }} /-</div>
+                        <p>Payment : 
+                            {% if o.order_status == "Success" %}
+                                <label style="color: green; font-weight: bold;">Paid</label>
+                            {% else %}
+                                <a href="/payment?order_id={{o.order_id}}"><button class="btn-success mb-2">Pay Now</button></a>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+           
+
+        {% endfor %}
+    {% endfor %}
+
+    </div>
+</div>
+
+{% include 'footer.html' %} {% endblock body %}

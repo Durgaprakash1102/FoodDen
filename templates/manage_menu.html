@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %} Manage Menu {% endblock title %}
+{% load static %}
+{% block body %}
+
+{% for message in messages %}
+    <div class="alert alert-success alert-dismissable fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center mb-3">Add a Dish</h1>
+            <form method="POST" action="/manage_menu" enctype="multipart/form-data" class="card p-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name of Dish</label>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter Name of Dish">
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category of Dish</label>
+                    <select name="cat" class="form-select" id="category">
+                        <option value="" disabled selected>Select</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }} - {{ category.description }}-{{ category.image  }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" name="price" class="form-control" id="price" placeholder="Enter the Price of Dish" maxlength="4">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="desc" class="form-control" id="description" rows="3" placeholder="Enter Description of Dish"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input type="file" name="img" class="form-control" id="image" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+            <img src="{% static 'milk.webp' %}" class="img-fluid rounded" alt="Image Placeholder">
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        {% for i in items %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <img src="{{ i.pic.url }}" class="card-img-top" alt="Dish Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ i.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">₹{{ i.price }}</h6>
+                        <p class="card-text">{{ i.desc }}</p>
+                        <form action="{% url 'delete_dish' i.id %}" method="post">
+                            {% csrf_token %}
+                            {% if user.is_superuser %}
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            {% else %}
+                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock body %}

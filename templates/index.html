@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Menu{% endblock title %}
+
+{% block body %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+    .carousel-item img {
+        height: 500px;
+        object-fit: cover;
+    }
+
+   
+
+   
+   
+    .restaurant-section {
+    
+      padding: 50px 0;
+    }
+    .restaurant-image {
+      border-radius: 10px;
+    }
+    .restaurant-content {
+      margin-top: 20px;
+    }
+    .heading {
+        font-family: 'Merriweather', serif;
+        font-size: 2rem; 
+  font-weight: 600; 
+  margin-bottom: 20px;
+  color:red; 
+  text-align: center;
+    }
+.text {
+  font-family: 'Open Sans', sans-serif; 
+  font-size: 1.1rem; 
+  color: #4A4A4A; 
+  margin-bottom: 29px; 
+  text-align: center;
+}
+.sub-title{
+    color:black;
+    text-align: center;
+    font-family:serif;
+
+}
+    @media (max-width: 767px) {
+       
+
+        .container-fluid.position-relative {
+            margin-bottom: -200px; /* Adjust negative margin to remove the gap */
+        }
+        .carousel-item img {
+        height: 350px;
+        object-fit: cover;
+    }
+    }
+    .carousel-item {
+    position: relative;
+}
+
+.carousel-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Adjust the RGBA values for desired transparency */
+    z-index: 1;
+}
+.btn-primary{
+    font-family: 'Arial', sans-serif; 
+}
+
+
+.order-now-button:hover {
+   
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+
+}
+#why-choose-us {
+  padding: 50px 0;
+}
+
+#section-heading {
+
+  text-align: center; /* Center-align for a neat look */
+  margin-bottom: 40px; /* Space below the heading */
+  padding-bottom: 10px; /* Space between text and underline */
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 30px; /* Adjust padding for spacing */
+
+}
+
+
+.card-body i {
+  color:gold; /* Icon color to match the theme */
+  margin-bottom: 20px; /* Space between icon and title */
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 767px) {
+  .card-body {
+    padding: 20px; /* Adjust padding for better spacing */
+  }
+
+  .card {
+    margin-bottom: 20px; /* Add space between cards on mobile */
+  }
+}
+
+
+
+
+.collection-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px; /* Space between rows */
+}
+
+.collection-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.collection-img {
+  width: 100%;
+  height: 300px;
+}
+
+.collection-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.collection-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.75rem;
+  margin-bottom: 10px;
+}
+#collection-name{
+   padding: 20px; 
+   
+}
+.alert-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .alert {
+           
+            max-width: 400px; /* Adjust width as needed */
+            width: 100%; /* Ensure it fits within the max-width */
+        }
+
+      
+</style>
+
+
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active position-relative">
+            <img src="{% static 'banner1.jpg' %}" class="d-block w-100" alt="Banner 1">
+            <!-- Transparent color overlay -->
+            <div class="overlay"></div>
+            <!-- Content in the middle of the banner -->
+            <div class="carousel-caption d-flex flex-column justify-content-center align-items-center" style="top: 50%; transform: translateY(-50%); z-index: 2;">
+                <h1 class="text-white mb-4">Discover the best food & drinks in Dilshuknagar</h1>
+                <a href="/menu" class="btn  btn-lg order-now-button"  style="background-color:rgba(252, 250, 250, 0.7); border: none; border-radius: 30px; padding: 15px 30px; font-size: 20px; color: black;">
+                   Order Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="alert-container">
+  {% for message in messages %}
+  <div class="alert alert-primary alert-dismissable fade show" role="alert">
+      <span class="icon"><i class="fas fa-info-circle"></i></span>
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+<section class="restaurant-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <img src="{% static 'main_img.png' %}" alt="Food's Den Restaurant" class="img-fluid restaurant-image">
+        </div>
+        <div class="col-md-6">
+          <div class="restaurant-content">
+            <h2 class="heading">Food's Den Restaurant</h2>
+            <p class="text">
+              Nestled in Dilshuknagar, Food's Den is a local gem known for its homey atmosphere and delicious, made-from-scratch dishes. Our menu offers a variety of comfort foods and traditional favorites, perfect for a family meal or casual outing. Enjoy warm, friendly service and hearty portions in a welcoming setting. Join us at Food's Den, where great food and community come together!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <div class="container">
+      <h2 class="heading">Our food Collections</h2>
+      <p class="text">Discover our diverse food collections, each curated to offer a unique dining experience. From fresh salads to decadent desserts, find your favorites and explore a world of flavors.
+
+      </p>
+      <div class="row">
+        <!-- Collection 1 -->
+        <div class="col-md-4">
+            <div class="collection-card">
+                <img src="{% static 'fried.jpg' %}" alt="Healthy Salads" class="collection-img">
+                <h3 class="sub-title" id="collection-name">Fried piece biryani</h3>
+            </div>
+        </div>
+        <!-- Collection 2 -->
+        <div class="col-md-4">
+            <div class="collection-card">
+                <img src="{% static 'manchuriya1.webp' %}" alt="Gourmet Burgers" class="collection-img">
+                <h3 class="sub-title" id="collection-name">Chicken Manchuriya</h3>
+            </div>
+        </div>
+        <!-- Collection 3 -->
+        <div class="col-md-4">
+            <div class="collection-card">
+                <img src="{% static 'milkshake.jpg' %}" alt="Decadent Desserts" class="collection-img">
+                <h3 class="sub-title" id="collection-name">Decadent Desserts</h3>
+            </div>
+        </div>
+        <!-- Collection 4 -->
+        <div class="col-md-4">
+            <div class="collection-card">
+                <img src="{% static 'dum.jpg' %}" alt="Hearty Soups" class="collection-img">
+                <h3 class="sub-title" id="collection-name">Biryani Dum</h3>
+            </div>
+        </div>
+        <!-- Collection 5 -->
+        <div class="col-md-4">
+            <div class="collection-card">
+                <img src="{% static 'vegnoo.jpg' %}" alt="Exotic Dishes" class="collection-img">
+                <h3 class="sub-title" id="collection-name">Veg Noodles</h3>
+            </div>
+        </div>
+        <!-- Collection 6 -->
+        <div class="col-md-4">
+            <div class="collection-card">
+                <img src="{% static 'prawn.jpg' %}" alt="Breakfast Favorites" class="collection-img">
+                <h3 class="sub-title" id="collection-name">Prawn Biryani</h3>
+            </div>
+        </div>
+    </div>
+    </div>    
+  <br>
+    <div class="container">
+      <h2 class="heading" id="section-heading">Why Choose Us?</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body text-center">
+              <i class="fas fa-apple-alt fa-3x"></i> <!-- Icon for Serve Health Food -->
+              <h3 class="sub-title">Serve Health Food</h3>
+              <p class="text">We prioritize your health by offering nutritious and delicious food options that are carefully sourced and prepared to meet the highest standards of quality.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body text-center">
+              <i class="fas fa-truck fa-3x"></i> <!-- Icon for Fast Delivery -->
+              <h3 class="sub-title">Fast Delivery</h3>
+              <p class="text">Experience swift and reliable delivery services, ensuring that your orders arrive promptly so you can enjoy our healthful meals without delay.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body text-center">
+              <i class="fas fa-star fa-3x"></i> <!-- Icon for Best Quality -->
+              <h3 class="sub-title">Best Quality</h3>
+              <p class="text">We are committed to providing top-notch quality in every aspect of our service, from the ingredients we use to the customer service we offer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+{% comment %} <!-- Wavy Curve -->
+<div class="footer-wave">
+    <svg viewBox="0 0 600 120" preserveAspectRatio="none">
+        <path d="M0,60 C50,30 100,90 150,60 C200,30 250,90 300,60 C350,30 400,90 450,60 C500,30 550,90 600,60 V120 H0 Z" class="shape-fill"></path>
+    </svg>
+</div>
+{% endcomment %}
+
+<br>
+
+{% include 'footer.html' %}
+{% endblock body %}

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Bill{% endblock title %}
+
+{% block css %}
+<style>
+  .alert {
+    margin-bottom: 20px;
+  }
+
+  .invoice-section {
+    margin-bottom: 30px;
+  }
+
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+
+  .card-header {
+    background-color: #ff8080;
+    border-radius: 15px 15px 0 0;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .table {
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .table th {
+    background-color: #ffcccc;
+    color: #ff8080;
+  }
+
+  .table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .text-end {
+    text-align: right;
+  }
+</style>
+{% endblock css %}
+
+{% block body %}
+
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="invoice-section">
+        <h3 class="text-center mb-4">All Bills</h3>
+        {% for b in bills %}
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Invoice #{{ b.id }}</h5>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Item Name</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item, values in b.order_items.items %}
+                <tr>
+                  <td>{{ item }}</td>
+                  <td>{{ values.0 }}</td>
+                  <td>{{ values.1 }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <div class="text-end">
+              <p><strong>Invoice Time:</strong> {{ b.bill_time }}</p>
+              {% if b.name != "Unknown" %}
+              <p><strong>Name:</strong> {{ b.name }}</p>
+              <p><strong>Phone:</strong> {{ b.phone }}</p>
+              {% endif %}
+              <p><strong>Bill Total:</strong> {{ b.bill_total }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block js %}
+<script>
+  // You can add JavaScript code here if needed
+</script>
+{% include 'footer.html' %}<!-- Banner Carousel -->
+
+{% endblock js %}

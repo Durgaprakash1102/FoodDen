@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% load static %}
+
+{% block body %}
+
+<style>
+    /* Ensure full height and proper positioning */
+    .signup-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url('{% static "hey.jpg" %}') no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+        overflow: hidden;
+       
+    }
+
+    .signup-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(2px);
+       z-index: 1;
+    }
+   
+    .signup-card {
+        position: relative;
+        z-index: 2;
+        border-radius: 15px; /* Rounded corners */
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(29, 29, 29, 0.4); /* White transparent background */
+        width: 100%;
+        max-width: 500px; /* Suitable width for the card */
+        padding: 2rem; /* Padding inside the card */
+    }
+
+    .signup-card .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .signup-card h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color:white;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .signup-card .form-outline {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .signup-card .form-outline input.form-control {
+        padding-left: 2.5rem;
+        border-radius: 12px;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s ease;
+    }
+
+    .signup-card .form-outline i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgb(232, 105, 105);
+    }
+
+    .signup-card .btn-signup {
+        border-radius: 25px;
+        padding: 12px 20px;
+        background-color: red;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    .signup-card .btn-signup:hover {
+        background-color: rgb(191, 50, 50);
+        color: #fff;
+    }
+
+    /* Alert styling */
+    .alert {
+        margin-bottom: 1rem;
+        border-radius: 12px;
+    }
+
+    .btn-close {
+        filter: invert(1);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .signup-card {
+            padding: 1.5rem;
+            max-width: 90%;
+        }
+
+        .signup-card .card-img-top {
+            height: auto;
+           
+        }
+        .signup-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url('{% static "hey1.jpg" %}') no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+        overflow: hidden;
+        padding:30px 0;
+    
+    }
+    .signup-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2); /* Semi-transparent black */
+        backdrop-filter: blur(2px);
+       z-index: 1;
+    }
+   
+    
+    }
+     #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* Loader content */
+        .loader {
+            text-align: center;
+        }
+
+        .utensils {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .utensils div {
+            width: 30px;
+            height: 70px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #f39c12;
+            position: relative;
+            animation: spin 1s infinite linear;
+        }
+
+        /* Custom utensils shapes */
+        .fork::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 5px;
+            height: 30px;
+            background-color: #fff;
+        }
+
+        .fork::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 5px;
+            height: 5px;
+            background-color: #fff;
+            box-shadow: 10px 0 0 #fff, 20px 0 0 #fff;
+        }
+
+        .knife::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 10px;
+            height: 60px;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        .spoon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 10px;
+            height: 35px;
+            background-color: #fff;
+            border-radius: 50% 50% 0 0;
+        }
+
+        h3 {
+            color: #333;
+            font-family: 'Merriweather', serif;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+</style>
+
+<section class="signup-section">
+    <div class="signup-overlay"></div>
+    <div class="signup-card">
+        <div class="card-body">
+            <h1 class="text-center">Sign Up</h1>
+            {% for message in messages %}
+            <div class="alert alert-primary alert-dismissable fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            <form action="/signup" method="POST">
+                {% csrf_token %}
+                <!-- First Name -->
+                <div class="form-outline">
+                    <i class="fas fa-user fa-lg"></i>
+                    <input type="text" name="fname" id="fname" class="form-control" placeholder="First Name">
+                </div>
+                <!-- Last Name -->
+                <div class="form-outline">
+                    <i class="fas fa-user fa-lg"></i>
+                    <input type="text" name="lname" id="lname" class="form-control" placeholder="Last Name">
+                </div>
+                <!-- Mobile Number -->
+                <div class="form-outline">
+                    <i class="fas fa-mobile-alt fa-lg"></i>
+                    <input type="text" name="number" id="number" class="form-control" placeholder="Mobile Number" maxlength="10">
+                </div>
+                <!-- Password -->
+                <div class="form-outline">
+                    <i class="fas fa-lock fa-lg"></i>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" minlength="8">
+                </div>
+                <!-- Confirm Password -->
+                <div class="form-outline">
+                    <i class="fas fa-lock fa-lg"></i>
+                    <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder="Confirm Password" minlength="8">
+                </div>
+                <!-- Submit Button -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-signup">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const signUpForm = document.querySelector("form");
+        signUpForm.addEventListener("submit", function (event) {
+            let isValid = true;
+            const firstName = document.getElementById("fname");
+            const lastName = document.getElementById("lname");
+            const mobileNumber = document.getElementById("number");
+            const password = document.getElementById("password");
+            const confirmPassword = document.getElementById("cpassword");
+
+            // Clear previous error messages
+            document.querySelectorAll('.error').forEach(e => e.remove());
+
+            // First name and last name validation
+            [firstName, lastName].forEach(field => {
+                if (field.value.trim() === "") {
+                    displayError(field, "This field cannot be empty");
+                    isValid = false;
+                } else if (!/^[a-zA-Z\s]+$/.test(field.value)) {
+                    displayError(field, "Only letters and spaces are allowed");
+                    isValid = false;
+                }
+            });
+
+            // Mobile number validation
+            if (!mobileNumber.value.match(/^[0-9]{10}$/)) {
+                displayError(mobileNumber, "Enter a valid 10-digit mobile number");
+                isValid = false;
+            }
+
+            // Password validation
+            if (password.value.length < 8) {
+                displayError(password, "Password must be at least 8 characters");
+                isValid = false;
+            }
+
+            // Confirm password validation
+            if (password.value !== confirmPassword.value) {
+                displayError(confirmPassword, "Passwords do not match");
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // Stop form submission
+            }
+        });
+
+        function displayError(element, message) {
+            const error = document.createElement("div");
+            error.className = "error";
+            error.style.color = "red";
+            error.style.marginTop = "0.5rem";
+            error.innerText = message;
+            element.parentNode.appendChild(error);
+        }
+    });
+</script>
+
+{% include 'footer.html' %}
+{% endblock body %}

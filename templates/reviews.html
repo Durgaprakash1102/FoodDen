@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Reviews{% endblock title %}
+
+{% block body %}
+
+<style>
+    .review-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    .review {
+        background-color: #fff;
+        border: 1px solid #ddd; 
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        transition: transform 0.3s ease-in-out;
+    }
+    .review:hover {
+        transform: translateY(-5px); 
+    }
+    .review h4 {
+        color: red; 
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+    .review h5 {
+        color: #333; 
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+    .review h6 {
+        color: #888; 
+    }
+    .review-form-container {
+        margin: 20px auto;
+        max-width: 600px;
+        padding: 20px;
+        background-color: #f8f9fa; 
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        text-align: center; 
+    }
+    .review-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .review-form .form-floating {
+        position: relative;
+    }
+    .btn-danger {
+        background-color: red; 
+        border-color: rgb(191, 50, 50);
+        transition: background-color 0.3s ease;
+        width: 200px;
+        display: inline-block; 
+        margin: 0 auto; 
+    }
+    .btn-danger:hover {
+        background-color: red; 
+    }
+    @media (max-width: 768px) {
+        .review-container {
+            grid-template-columns: 1fr; 
+        }
+    }
+    .heading {
+        font-family: 'Merriweather', serif;
+        font-size: 2rem; 
+        font-weight: 600; 
+        margin-bottom: 20px;
+        color: rgb(55, 52, 52); 
+        text-align: center;
+    }
+</style>
+<br>
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="review-form-container">
+            <h3 class="heading">Your Review Matters Us A Lot</h3>
+            <form method="POST" action="/reviews" class="review-form">
+                {% csrf_token %}
+                <div class="form-floating">
+                    <textarea name="comment" id="comment" class="form-control" placeholder="Add a comment" maxlength="250" style="height: 100px;" required></textarea>
+                    <label for="comment">Comment</label>
+                </div>
+                <button type="submit" class="btn btn-danger">Publish</button>
+            </form>
+        </div>
+    </div>
+{% endif %}
+
+<div class="container">
+    <h2 class="heading">Responses from our valuable customers</h2>
+    <div class="review-container">
+        {% for r in reviews %}
+        <div class="review">
+            <h4><b>{{ r.name }}</b></h4>
+            <h5>{{ r.comment }}</h5>
+            <h6>{{ r.created_at }}</h6>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% include 'footer.html' %}
+
+{% endblock body %}

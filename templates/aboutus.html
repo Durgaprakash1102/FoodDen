@@ -1,0 +1,416 @@
+{% extends 'base.html' %} {% block title %}About Us{% endblock title %} {% load static %} {% block body %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #333;
+        }
+        
+        .about-us {
+            background-color: #272222;
+            color: #fff;
+        }
+        
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        
+        .about-us h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+        
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        .image {
+            flex: 1;
+            text-align: center;
+        }
+        .text-center{
+            padding-top: 15px;
+        }
+        .image img {
+           padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .text {
+            flex: 2;
+            padding: 0 20px;
+        }
+        
+        .text h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .text p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .timeline {
+            margin-bottom: 50px;
+        }
+        
+        .timeline h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .timeline ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .timeline ul li {
+            border-left: 4px solid #ff6347;
+            margin-bottom: 10px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline ul li h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .timeline ul li p {
+            margin: 5px 0 0 0;
+            font-size: 16px;
+        }
+        
+        .team,
+        .testimonials {
+            margin-bottom: 50px;
+        }
+        
+        .team h2,
+        .testimonials h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .team-members,
+        .testimonials-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .team-member,
+        .testimonial {
+            width: 30%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .team-member img,
+        .testimonial img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-member h3,
+        .testimonial h3 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        
+        .team-member p,
+        .testimonial p {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #fff;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            .content {
+                flex-direction: column;
+            }
+            .text {
+                padding: 0;
+            }
+            .team-member,
+            .testimonial {
+                width: 45%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul li a {
+                font-size: 16px;
+            }
+            .about-us h1 {
+                font-size: 28px;
+            }
+            .text h2 {
+                font-size: 24px;
+            }
+            .team-member,
+            .testimonial {
+                width: 100%;
+            }
+            .mission{
+                padding: 0 20px;
+                text-align: center;
+            }
+        }
+        
+
+        .card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        
+        .card-title {
+            color: #ff6347;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .card-text {
+            color: #6B8A7A;
+            font-size: 16px;
+        }
+
+        .featured-dishes {
+    padding: 30px;
+}
+
+.dish {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff; /* Optional: Background color for contrast */
+    border-radius: 8px; /* Optional: Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Shadow for depth */
+    height: 100%; /* Ensures all dishes have the same height */
+    overflow: hidden;
+}
+
+.dish img {
+    width: 100%;
+    height: 200px; /* Set a fixed height for images */
+    object-fit: cover; /* Ensures images cover the area without distortion */
+}
+
+.dish-info {
+    padding: 15px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dish-info h3 {
+    color: #ff6347;
+    margin: 0;
+}
+
+.dish-info p {
+    margin: 10px 0 0;
+}
+.heading {
+        font-family: 'Merriweather', serif;
+        font-size: 2rem; 
+  font-weight: 600; 
+  margin-bottom: 20px;
+  color:red; 
+  text-align: center;
+    }
+    @media (max-width: 576px) {
+    .featured-dishes .col-md-4 {
+        padding-bottom: 20px;
+    }
+}
+.year{
+    background-color: #333;
+    color: white;
+}
+</style>
+    </style>
+</head>
+
+
+<body>
+
+
+    <section class="about-us">
+        <div class="container">
+            <div class="content">
+                <div class="image">
+                    <img src="{% static 'unnamed.jpg' %}" alt="Super Delicious" class="img-fluid">
+                </div>
+                <div class="text"  style="text-align: justify;">
+                    <h2 class="heading">Welcome to Super Delicious!</h2>
+                    <p class="px-3">At Super Delicious, we believe that food is not just about sustenance; it's about creating memorable experiences. Since our inception, we have been committed to serving the highest quality dishes made with the freshest ingredients.</p>
+                    <p class="px-3">Our journey began in 2010, with a small team of passionate chefs and food enthusiasts. Over the years, we have grown into a beloved dining destination, known for our diverse menu that caters to all taste preferences. Whether you're in the mood for something savory or sweet, light or hearty, we have something to satisfy your cravings.</p>
+                    <p class="px-3">We pride ourselves on our friendly service, warm ambiance, and dedication to excellence. Every meal is prepared with love and care, ensuring that each bite is a delight. We are constantly innovating, bringing new flavors and dishes to our menu, so there is always something new to try.</p>
+                    <p class="px-3">Thank you for choosing Super Delicious. We look forward to serving you and making your dining experience truly special.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="mission">
+        <div class="container card">
+            <h2 class="heading">Our Mission</h2>
+            <p class="card-text">Our mission is to bring joy and satisfaction to our customers through delicious and innovative dishes. We are dedicated to using only the highest quality ingredients, and we strive to create a dining experience that exceeds expectations every
+                time.</p>
+        </div>
+    </section>
+
+    <section class="featured-dishes" >
+        <div class="container">
+            <h2 class="heading">Featured Dishes</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="dish">
+                        <img src="{% static 'about1.webp' %}" alt="Food 6">
+                        <div class="dish-info">
+                            <h3 >Dish 1</h3>
+                            <p>A mouth-watering dish with a perfect blend of flavors.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dish">
+                        <img src="{% static 'about2.avif' %}" alt="Food 6">
+                        <div class="dish-info">
+                            <h3 >Dish 2</h3>
+                            <p>Experience culinary excellence with this delectable dish.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dish">
+                        <img src="{% static 'about3.webp' %}" alt="Food 6">
+                        <div class="dish-info">
+                            <h3 >Dish 3</h3>
+                            <p>Savor the flavors of this exquisite dish that will tantalize your taste buds.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <br>
+
+    <section class="timeline">
+        <div class="container">
+            <h2 class="heading">Our Journey</h2>
+            <ul>
+                <li class="year" >
+                    <h3>2010</h3>
+                    <p>Super Delicious was founded with a vision to create exceptional dining experiences.</p>
+                </li>
+                <li class="year">
+                    <h3>2015</h3>
+                    <p>Expanded our restaurant to accommodate more guests and introduced new menu items.</p>
+                </li>
+                <li class="year">
+                    <h3>2018</h3>
+                    <p>Won the Best Restaurant Award in the city.</p>
+                </li>
+                <li class="year">
+                    <h3>2021</h3>
+                    <p>Introduced a new menu with international cuisines.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="team">
+        <div class="container" >
+            <h2 class="heading">Meet Our Team</h2>
+            <div class="team-members">
+                <div class="team-member">
+                    <img src="https://goodmenproject.com/wp-content/uploads/2019/01/7-Things-by-Shutterstock.jpg" alt="Chef John">
+                    <h3 style="color:#ff6347;">Chef John</h3>
+                    <p style="color: #090808;">John is our head chef with over 20 years of experience in the culinary industry. His passion for creating mouth-watering dishes has earned him numerous accolades.</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://people.com/thmb/bTJfZpcUTlakcPMYyQFPI-XK6GI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(999x0:1001x2)/wendy-naugle-122222-2c3dd20a8e5c45ada873b6495a73359e.jpg" alt="Manager Jane">
+                    <h3 style="color:#ff6347;">Manager Jane</h3>
+                    <p style="color: #090808;">Jane ensures that every aspect of your dining experience is perfect. Her attention to detail and friendly demeanor make her an invaluable part of our team.</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://people.com/thmb/R0W7HZFGSpLZH957GgwS6UX0_KI=/4000x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(749x0:751x2)/maria-mercedes-lara-headshot-5a89baa987094e808cecc215ea82da8d.jpg" alt="Sous Chef Mark">
+                    <h3 style="color:#ff6347;">Sous Chef Mark</h3>
+                    <p style="color: #090808;">Mark's creativity and expertise in the kitchen help us bring new and exciting dishes to our menu. His dedication to quality is second to none.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="heading">Customer Testimonials</h2>
+            <div class="testimonials-content">
+                <div class="testimonial">
+                    <img src="https://people.com/thmb/yivXS08TvhHbTBuDf5qXGltsioE=/4000x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(599x0:601x2)/TaylorSwift_PEOPLE_2-3ae7b9b0cfee4c869253ec38306a5ead.jpg" alt="Customer 1">
+                    <h3 style="color:#ff6347;">Customer 1</h3>
+                    <p style="color: #090808;">"Super Delicious has the best food in town! The service is exceptional, and the ambiance is perfect for a family dinner or a night out."</p>
+                </div>
+                <div class="testimonial">
+                    <img src="https://experteditor.com.au/wp-content/uploads/2023/09/genuinely-happy-people-traits.png" alt="Customer 2">
+                    <h3 style="color:#ff6347;">Customer 2</h3>
+                    <p style="color: #090808;">"I am always impressed with the quality and variety of dishes at Super Delicious. They never fail to exceed my expectations."</p>
+                </div>
+                <div class="testimonial">
+                    <img src="https://goodmenproject.com/wp-content/uploads/2019/01/7-Things-by-Shutterstock.jpg" alt="Customer 3">
+                    <h3 style="color:#ff6347;">Customer 3</h3>
+                    <p style="color: #090808;">"From the appetizers to the desserts, everything at Super Delicious is top-notch. Highly recommended!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'footer.html' %}
+</body>
+
+</html>
+{% endblock body %}

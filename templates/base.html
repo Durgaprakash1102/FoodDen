@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %} || Cafe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+       * {
+            text-decoration: none;
+        }
+
+        .navbar {
+            background-color: rgb(11, 3, 3);
+            border-radius: 0;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar-brand {
+            color: red;
+            font-weight: 700; 
+            font-size: 24px; 
+            margin-right: 20px; 
+            font-family: 'Arial', sans-serif; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+
+        .navbar-toggler {
+            border-color: white;
+        }
+
+        .nav-link {
+            color: white;
+        }
+
+        .nav-link.active {
+            color: white;
+            font-size: 15px;
+            padding: 5px 10px;
+            font-family: 'Arial', sans-serif;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-buttons .btn {
+            margin-left: 5px;
+            color: white;
+            padding: 4px 6px;
+            font-size: 16px;
+        }
+
+        .nav-buttons .btn:hover {
+            background-color: rgb(63, 3, 3);
+            color: snow;
+        }
+
+        .nav-buttons .btn a {
+            color: inherit;
+            text-decoration: none;
+        }
+        @media (min-width: 768px) and (max-width: 992px) {
+            .navbar-collapse {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .navbar-nav .nav-link {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .navbar-brand {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar-collapse {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .navbar-nav .nav-link {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .navbar-brand {
+                padding-left: 15px;
+            }
+        }
+        .navbar-nav {
+            margin: auto; /* Center the navigation links */
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0;
+        }
+
+        .custom-toggler {
+            border: none;
+            background-color: #007bff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .custom-toggler:hover {
+            transform: scale(1.1);
+        }
+
+        .custom-icon {
+            width: 24px;
+            height: 24px;
+            background: url('path-to-your-icon.svg') no-repeat center center;
+            background-size: 24px 24px;
+        }
+
+        .custom-icon::before {
+            content: "\f0c9";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #fff;
+            font-size: 20px;
+            display: inline-block;
+        }
+        #linkname{
+            color: white;
+        }
+        #logoname{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/" id="logoname">food'ss den</a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="custom-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/" id="linkname">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/aboutus" id="linkname">About Us</a>
+                    </li>
+                    {% if user.is_superuser %}
+                    <!-- Superuser specific links -->
+                    {% else %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/menu" id="linkname">Menu</a>
+                    </li>
+                    {% endif %}
+                    {% for category in categories %}
+                    {% endfor %}
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/reviews" id="linkname">Reviews</a>
+                    </li>
+                    {% if user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/manage_menu" id="linkname">Add Item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/category" id="linkname">Add category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/all_orders" id="linkname">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/view_bills" id="linkname">Bills</a>
+                    </li>
+                    {% else %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/my_orders" id="linkname">My orders</a>
+                    </li>
+                    {% endif %}
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/contactus" id="linkname">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/gallery" id="linkname">Gallery</a>
+                    </li>
+                </ul>
+
+                <div class="nav-buttons justify-content-center">
+                    {% if user.is_authenticated %}
+                        <a class="nav-link active" href="/cart" style="color: white;" title="cart">
+                            <i class="fas fa-shopping-cart"></i>(<span id="cart">0</span>)
+                        </a>
+                        <a class="btn" href="/profile" title="profile">
+                            <i class="fa fa-user-circle"></i>
+                        </a>
+                        <a class="btn" href='/logout' title="logout" id="logout-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    {% else %}
+                        
+                        <a class="btn" href="/signup" title="signup">
+                            <i class="fas fa-user-edit"></i>
+                        </a>
+                        <a class="btn" href="/login" title="login">
+                            <i class="fas fa-arrow-right-to-bracket"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+<!-- Modal HTML -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel" style="color: red;">Confirm Logout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a id="confirm-logout" class="btn btn-primary" href="#" style="background-color: red;">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% block body %} {% endblock body %}
+
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js"></script>
+
+
+    {% block js %}{% endblock js %}
+
+    <script>
+        if (localStorage.getItem('cart') == null) {
+            var cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }
+        var total = 0;
+        for (var item in cart) {
+            total = total + cart[item][0];
+            document.getElementById('cart').innerHTML = total;
+        }
+    </script>
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var logoutLink = document.getElementById('logout-link');
+        var confirmLogout = document.getElementById('confirm-logout');
+
+        logoutLink.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            // Show the custom modal
+            var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+            logoutModal.show();
+
+            // Set the href of the confirmation button to the logout link
+            confirmLogout.href = logoutLink.href;
+        });
+    });
+</script>
+
+    
+</body>
+
+</html>
